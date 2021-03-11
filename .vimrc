@@ -34,8 +34,8 @@ autocmd! BufNewFile,BufRead *.cl set ft=opencl
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
 
-" Default .h files to C++ syntax
-autocmd! BufNewFile,BufRead *.h set ft=cpp
+" Default .h files to C syntax
+autocmd! BufNewFile,BufRead *.h set ft=c
 
 " Syntax highlighting for assembly files
 autocmd! BufNewFile,BufRead *.s set ft=gas
@@ -102,3 +102,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+set vb t_vb= " no bell on tmux
+
+let &t_ZH=""
+let &t_ZR=""
