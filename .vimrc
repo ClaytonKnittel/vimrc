@@ -47,6 +47,7 @@ filetype plugin indent on
 syntax on
 set t_Co=256
 
+set ttymouse=xterm2
 set mouse=a
 filetype plugin indent on
 set tabstop=4
@@ -58,8 +59,6 @@ set ruler
 set hlsearch
 
 " for detecting italics escape code
-"set t_ZH=^[[3m
-"set t_ZR=^[[23m
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
@@ -103,6 +102,3 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 set vb t_vb= " no bell on tmux
-
-let &t_ZH=""
-let &t_ZR=""
