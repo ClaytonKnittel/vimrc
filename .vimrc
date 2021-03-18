@@ -52,11 +52,13 @@ set mouse=a
 filetype plugin indent on
 set tabstop=4
 set shiftwidth=4
-" set expandtab
+set noexpandtab
 set backspace=indent,eol,start
 set ruler
 
 set hlsearch
+
+let g:python_recommended_style=0
 
 " for detecting italics escape code
 let &t_ZH="\e[3m"
