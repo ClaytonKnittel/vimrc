@@ -10,10 +10,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " add plugins here
 
-" https://vimawesome.com/plugin/python-syntax-please-everybody
-Plugin 'vim-python/python-syntax'
-
-
 " gruvbox color theme
 Plugin 'morhetz/gruvbox'
 
