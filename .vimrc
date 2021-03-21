@@ -100,3 +100,10 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 set vb t_vb= " no bell on tmux
+
+try
+  source .vimrc
+catch
+  " no local .vimrc, ignore
+endtry
+
