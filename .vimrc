@@ -66,8 +66,13 @@ let &t_ZR="\e[23m"
 
 " colorscheme gruvbox
 " set bg=dark
-colorscheme onehalflight
-let g:airline_theme='onehalfdark'
+if has('macunix')
+	colorscheme onehalfdark
+	let g:airline_theme='onehalfdark'
+else
+	colorscheme onehalflight
+	let g:airline_theme='onehalfdark'
+endif
 
 highlight Comment cterm=italic
 
