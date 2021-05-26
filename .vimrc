@@ -11,7 +11,10 @@ Plugin 'gmarik/Vundle.vim'
 " add plugins here
 
 " gruvbox color theme
-Plugin 'morhetz/gruvbox'
+" Plugin 'morhetz/gruvbox'
+
+Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+"Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
 " better C/C++ highlighting
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -51,6 +54,7 @@ set shiftwidth=4
 set noexpandtab
 set backspace=indent,eol,start
 set ruler
+set cursorline
 
 set hlsearch
 
@@ -60,8 +64,10 @@ let g:python_recommended_style=0
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-colorscheme gruvbox
-set bg=dark
+" colorscheme gruvbox
+" set bg=dark
+colorscheme onehalflight
+let g:airline_theme='onehalfdark'
 
 highlight Comment cterm=italic
 
@@ -101,9 +107,10 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 set vb t_vb= " no bell on tmux
 
-try
-  source .vimrc
-catch
-  " no local .vimrc, ignore
-endtry
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+
 
