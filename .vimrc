@@ -118,4 +118,9 @@ if exists('+termguicolors')
 	set termguicolors
 endif
 
+hi VertSplit cterm=NONE guibg=#e6e6e6
+hi StatusLine guibg=#d0d0d0
+hi StatusLineNC guibg=#e6e6e6
+
+" hi CursorLine   cterm=NONE ctermbg=red ctermfg=white guibg=#e0e0e0 guifg=NONE
 
