@@ -30,6 +30,9 @@ autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 Plugin 'brgmnn/vim-opencl'
 autocmd! BufNewFile,BufRead *.cl set ft=opencl
 
+Plugin 'ClaytonKnittel/vim-metal'
+autocmd! BufNewFile,BufRead *.metal set ft=metal
+
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
 
