@@ -40,7 +40,7 @@ autocmd! BufNewFile,BufRead *.plist set ft=xml
 autocmd! BufNewFile,BufRead *.h set ft=c
 
 " Syntax highlighting for assembly files
-autocmd! BufNewFile,BufRead *.s set ft=gas
+autocmd! BufNewFile,BufRead *.s,*.S set ft=gas
 
 let g:python_version_2 = 1
 
@@ -121,9 +121,9 @@ if exists('+termguicolors')
 	set termguicolors
 endif
 
-hi VertSplit cterm=NONE guibg=#e6e6e6
-hi StatusLine guibg=#d0d0d0
-hi StatusLineNC guibg=#e6e6e6
+" hi VertSplit cterm=NONE guibg=#e6e6e6
+" hi StatusLine guibg=#d0d0d0
+" hi StatusLineNC guibg=#e6e6e6
 
 " hi CursorLine   cterm=NONE ctermbg=red ctermfg=white guibg=#e0e0e0 guifg=NONE
 
