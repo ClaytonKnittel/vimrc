@@ -11,9 +11,9 @@ Plugin 'gmarik/Vundle.vim'
 " add plugins here
 
 " gruvbox color theme
-" Plugin 'morhetz/gruvbox'
+Plugin 'ClaytonKnittel/gruvbox'
 
-Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+" Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 "Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
 " better C/C++ highlighting
@@ -67,15 +67,15 @@ let g:python_recommended_style=0
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-" colorscheme gruvbox
-" set bg=dark
-if has('macunix')
-	colorscheme onehalfdark
-	let g:airline_theme='onehalfdark'
-else
-	colorscheme onehalflight
-	let g:airline_theme='onehalfdark'
-endif
+colorscheme gruvbox
+set bg=dark
+"if has('macunix')
+"	colorscheme onehalfdark
+"	let g:airline_theme='onehalfdark'
+"else
+"	colorscheme onehalflight
+"	let g:airline_theme='onehalfdark'
+"endif
 
 highlight Comment cterm=italic
 
