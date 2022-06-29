@@ -42,6 +42,9 @@ autocmd! BufNewFile,BufRead *.h set ft=c
 " Syntax highlighting for assembly files
 autocmd! BufNewFile,BufRead *.s,*.S set ft=gas
 
+" Syntax highlighting for objective-c files
+autocmd! BufNewFile,BufRead *.m set ft=objc
+
 let g:python_version_2 = 1
 
 call vundle#end()
