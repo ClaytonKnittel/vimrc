@@ -96,6 +96,12 @@ inoremap <C-g> <Esc>ldwi
 " jump to end of line in insert mode
 inoremap <C-e> <C-o>$
 
+" movement controls for insert mode
+imap <C-h> <Left>
+imap <C-j> <Down>
+imap <C-k> <Up>
+imap <C-l> <Right>
+
 
 " clang-format
 " map <C-I> :py3f ~/.vim/clang-format.py<cr>
@@ -110,7 +116,7 @@ function FormatBuffer()
 endfunction
 
 map <C-K> :call FormatBuffer()<cr>
-imap <C-K> <c-o>:call FormatBuffer()<cr>
+" imap <C-K> <c-o>:call FormatBuffer()<cr>
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
