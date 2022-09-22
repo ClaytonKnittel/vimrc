@@ -107,14 +107,17 @@ imap <C-l> <Right>
 
 
 " clang-format
-map <C-I> :py3f ~/.vim/bundle/vim-clang-format-executor/clang-format.py<cr>
-imap <C-I> <c-o>:py3f ~/.vim/bundle/vim-clang-format-executor/clang-format.py<cr>
-
-function! Formatonsave()
-  let l:formatdiff = 1
-  py3f ~/.vim/bundle/vim-clang-format-executor/clang-format.py
+function FormatBuffer()
+  if &modified && !empty(findfile('.clang-format', expand('%:p:h') . ';'))
+    let cursor_pos = getpos('.')
+    :%!clang-format
+    call setpos('.', cursor_pos)
+  endif
 endfunction
-autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+
+map <C-I> :call FormatBuffer()<cr>
+imap <C-I> <c-o>:call FormatBuffer()<cr>
+autocmd BufWritePre *.h,*.hpp,*.c,*.cc :call FormatBuffer()
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
