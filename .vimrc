@@ -111,7 +111,7 @@ imap <C-l> <Right>
 function FormatBuffer()
   if !empty(findfile('.clang-format', expand('%:p:h') . ';'))
     let cursor_pos = getpos('.')
-    :%!clang-format
+    :%!clang-format --assume-filename="%"
     if v:shell_error != 0
       execute "echo \"" . join(getline(1, '$'), '\n') . "\""
       undo
