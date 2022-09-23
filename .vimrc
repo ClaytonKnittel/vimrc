@@ -58,12 +58,13 @@ set t_Co=256
 set ttymouse=xterm2
 set mouse=a
 filetype plugin indent on
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
+set tabstop=2
+set shiftwidth=2
+set expandtab
 set backspace=indent,eol,start
 set ruler
 set cursorline
+set timeoutlen=250
 
 set hlsearch
 
@@ -108,15 +109,19 @@ imap <C-l> <Right>
 
 " clang-format
 function FormatBuffer()
-  if &modified && !empty(findfile('.clang-format', expand('%:p:h') . ';'))
+  if !empty(findfile('.clang-format', expand('%:p:h') . ';'))
     let cursor_pos = getpos('.')
     :%!clang-format
+    if v:shell_error != 0
+      execute "echo \"" . join(getline(1, '$'), '\n') . "\""
+      undo
+    endif
     call setpos('.', cursor_pos)
   endif
 endfunction
 
-map <C-I> :call FormatBuffer()<cr>
-imap <C-I> <c-o>:call FormatBuffer()<cr>
+map <C-F> :call FormatBuffer()<cr>
+imap <C-F> <c-o>:call FormatBuffer()<cr>
 autocmd BufWritePre *.h,*.hpp,*.c,*.cc :call FormatBuffer()
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
