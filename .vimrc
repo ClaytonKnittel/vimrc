@@ -39,9 +39,6 @@ autocmd! BufNewFile,BufRead *.metal set ft=metal
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
 
-" Default .h files to C syntax
-autocmd! BufNewFile,BufRead *.h set ft=c
-
 " Syntax highlighting for assembly files
 autocmd! BufNewFile,BufRead *.s,*.S set ft=gas
 
@@ -111,18 +108,17 @@ imap <C-l> <Right>
 function FormatBuffer()
   if !empty(findfile('.clang-format', expand('%:p:h') . ';'))
     let cursor_pos = getpos('.')
-    :%!clang-format --assume-filename="%"
+    :exe "s/$//" | :exe ":%!clang-format --assume-filename=\"%\"" | call setpos('.', cursor_pos)
     if v:shell_error != 0
       execute "echo \"" . join(getline(1, '$'), '\n') . "\""
       undo
     endif
-    call setpos('.', cursor_pos)
   endif
 endfunction
 
 map <C-F> :call FormatBuffer()<cr>
 imap <C-F> <c-o>:call FormatBuffer()<cr>
-autocmd BufWritePre *.h,*.hpp,*.c,*.cc :call FormatBuffer()
+autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.m :call FormatBuffer()
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
