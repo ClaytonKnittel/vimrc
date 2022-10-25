@@ -71,7 +71,11 @@ let g:python_recommended_style=0
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
-colorscheme gruvbox
+try
+  colorscheme gruvbox
+catch /^Vim\%((\a\+)\)\=:E/
+endtry
+
 set bg=dark
 "if has('macunix')
 "	colorscheme onehalfdark
