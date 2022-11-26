@@ -36,6 +36,9 @@ autocmd! BufNewFile,BufRead *.cl set ft=opencl
 Plugin 'ClaytonKnittel/vim-metal'
 autocmd! BufNewFile,BufRead *.metal set ft=metal
 
+Plugin 'leafgarland/typescript-vim'
+autocmd! BufNewFile,BufRead *.ts,*.mts set ft=typescript
+
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
 
@@ -122,7 +125,7 @@ endfunction
 
 map <C-F> :call FormatBuffer()<cr>
 imap <C-F> <c-o>:call FormatBuffer()<cr>
-autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.m :call FormatBuffer()
+autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.m,*.ts :call FormatBuffer()
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
