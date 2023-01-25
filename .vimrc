@@ -41,6 +41,11 @@ autocmd! BufNewFile,BufRead *.ts,*.mts set ft=typescript
 
 Plugin 'MaxMEllon/vim-jsx-pretty'
 
+Plugin 'rust-lang/rust.vim'
+
+Plugin 'sbdchd/neoformat'
+let g:neoformat_try_node_exe = 1
+
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
 
@@ -60,6 +65,7 @@ set t_Co=256
 set ttymouse=xterm2
 set mouse=a
 filetype plugin indent on
+set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -112,9 +118,12 @@ imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-l> <Right>
 
+" rustfmt
+let g:rustfmt_autosave = 1
+let g:rust_recommended_style = 0
 
 " clang-format
-function FormatBuffer()
+function ClangFormatBuffer()
   if !empty(findfile('.clang-format', expand('%:p:h') . ';'))
     let cursor_pos = getpos('.')
     :exe "s/$//" | :exe ":%!clang-format --assume-filename=\"%\"" | call setpos('.', cursor_pos)
@@ -124,10 +133,22 @@ function FormatBuffer()
     endif
   endif
 endfunction
+function PrettierFormatBuffer()
+  if !empty(findfile('.prettierrc*', expand('%:p:h') . ';'))
+    let cursor_pos = getpos('.')
+    :exe "s/$//" | :exe ":%!clang-format --assume-filename=\"%\"" | call setpos('.', cursor_pos)
+    if v:shell_error != 0
+      execute "echo \"" . join(getline(1, '$'), '\n') . "\""
+      undo
+    endif
+  endif
+endfunction
 
-map <C-F> :call FormatBuffer()<cr>
-imap <C-F> <c-o>:call FormatBuffer()<cr>
-autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.m,*.ts :call FormatBuffer()
+map <C-F> :call ClangFormatBuffer()<cr>
+imap <C-F> <c-o>:call ClangFormatBuffer()<cr>
+autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.m :call ClangFormatBuffer()
+
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.mts,*.html,*.css,*.json,*.md,README,*.yaml,*.yml Neoformat
 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
