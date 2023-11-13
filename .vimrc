@@ -1,57 +1,49 @@
 set nocompatible              " required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set updatetime=300
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call plug#begin()
 
 " add plugins here
-let g:lsp_semantic_enabled = 1
-let g:lsp_diagnostics_echo_cursor = 0
-let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_virtual_text_enabled = 0
-" let g:lsp_diagnostics_signs_enabled = 0
-" let g:lsp_document_highlight_enabled = 0
-let g:lsp_document_code_action_signs_enabled = 0
- 
-Plugin 'ClaytonKnittel/vim-lsp'
-Plugin 'mattn/vim-lsp-settings'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " gruvbox color theme
-Plugin 'ClaytonKnittel/gruvbox'
+Plug 'ClaytonKnittel/gruvbox'
 
 " Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 "Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
 " better C/C++ highlighting
-Plugin 'octol/vim-cpp-enhanced-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
-" Plugin 'lyuts/vim-rtags'
+" Plug 'lyuts/vim-rtags'
 
-" Plugin clang-format.py
-Plugin 'ClaytonKnittel/vim-clang-format-executor'
+" Plug clang-format.py
+Plug 'ClaytonKnittel/vim-clang-format-executor'
 
-" Plugin GNU assembler syntax highlighting
-Plugin 'ClaytonKnittel/vim-gas'
+" Plug GNU assembler syntax highlighting
+Plug 'ClaytonKnittel/vim-gas'
 
-Plugin 'tikhomirov/vim-glsl'
+Plug 'tikhomirov/vim-glsl'
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
 
-Plugin 'brgmnn/vim-opencl'
+Plug 'brgmnn/vim-opencl'
 autocmd! BufNewFile,BufRead *.cl set ft=opencl
 
-Plugin 'ClaytonKnittel/vim-metal'
+Plug 'ClaytonKnittel/vim-metal'
 autocmd! BufNewFile,BufRead *.metal set ft=metal
 
-Plugin 'HerringtonDarkholme/yats.vim'
+Plug 'HerringtonDarkholme/yats.vim'
 autocmd! BufNewFile,BufRead *.ts,*.mts set ft=typescript
 
-Plugin 'MaxMEllon/vim-jsx-pretty'
+Plug 'MaxMEllon/vim-jsx-pretty'
 
-Plugin 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
+
+Plug 'sbdchd/neoformat'
+let g:neoformat_try_node_exe = 1
 
 " Syntax highlighting for plist files
 autocmd! BufNewFile,BufRead *.plist set ft=xml
@@ -64,11 +56,13 @@ autocmd! BufNewFile,BufRead *.m set ft=objc
 
 let g:python_version_2 = 1
 
-call vundle#end()
+call plug#end()
+
 filetype plugin indent on
 syntax on
 set t_Co=256
 
+let g:mapleader=","
 set ttymouse=xterm2
 set mouse=a
 filetype plugin indent on
@@ -169,36 +163,110 @@ if exists('+termguicolors')
 	set termguicolors
 endif
 
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-  setlocal signcolumn=yes
-  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+"function! s:on_lsp_buffer_enabled() abort
+"  setlocal omnifunc=lsp#complete
+"  setlocal signcolumn=yes
+"  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+"
+"  nmap <buffer> ga <plug>(lsp-code-action-float)
+"  nmap <buffer> gd <plug>(lsp-definition)
+"  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+"  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+"  nmap <buffer> gr <plug>(lsp-references)
+"  nmap <buffer> gi <plug>(lsp-implementation)
+"  nmap <buffer> gt <plug>(lsp-type-definition)
+"  nmap <buffer> gn <plug>(lsp-rename)
+"  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+"  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+"  nmap <buffer> K <plug>(lsp-hover)
+"  " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+"  " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+"
+"  let g:lsp_format_sync_timeout = 1000
+"  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+"  
+"  " refer to doc to add more commands
+"endfunction
+"
+"augroup lsp_install
+"  au!
+"  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+"  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+"augroup END
 
-  nmap <buffer> ga <plug>(lsp-code-action-float)
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gt <plug>(lsp-type-definition)
-  nmap <buffer> gn <plug>(lsp-rename)
-  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-  nmap <buffer> K <plug>(lsp-hover)
-  " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-  " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+" May need for Vim (not Neovim) since coc.nvim calculates byte offset by count
+" utf-8 byte sequence
+set encoding=utf-8
 
-  let g:lsp_format_sync_timeout = 1000
-  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
-  
-  " refer to doc to add more commands
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved
+set signcolumn=yes
+
+" Enable undercurl for errors (kinda works)
+set t_Cs="\<Esc>[4:3m"
+
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use <c-space> to trigger completion
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming
+nmap gn <Plug>(coc-rename)
+
+" Applying code actions to the selected code block
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a <Plug>(coc-codeaction-cursor)
+nmap <leader>a <Plug>(coc-codeaction-cursor)
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf <Plug>(coc-fix-current)
+
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
 endfunction
 
-augroup lsp_install
-  au!
-  " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Add (Neo)Vim's native statusline support
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 
 " hi VertSplit cterm=NONE guibg=#e6e6e6
 " hi StatusLine guibg=#d0d0d0
