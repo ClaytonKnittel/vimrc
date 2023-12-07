@@ -42,6 +42,24 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 
 Plug 'rust-lang/rust.vim'
 
+Plug 'elixir-editors/vim-elixir'
+
+Plug 'mhinz/vim-mix-format'
+let g:mix_format_on_save = 1
+
+Plug 'neovimhaskell/haskell-vim'
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+" let g:haskell_classic_highlighting = 1
+
+Plug 'sdiehl/vim-ormolu'
+autocmd BufWritePre *.hs :call RunOrmolu()
+
 Plug 'sbdchd/neoformat'
 let g:neoformat_try_node_exe = 1
 
@@ -74,6 +92,7 @@ set backspace=indent,eol,start
 set ruler
 set cursorline
 set timeoutlen=250
+set guicursor+=a:blinkon0
 
 set hlsearch
 
@@ -210,6 +229,9 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Remap C-k in insert mode to close the CoC autocomplete window if open.
+inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#stop() : "\<C-k>"
+
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file
@@ -288,4 +310,12 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " hi StatusLineNC guibg=#e6e6e6
 
 " hi CursorLine   cterm=NONE ctermbg=red ctermfg=white guibg=#e0e0e0 guifg=NONE
+
+" Note: format comment: highlight comment, then gq
+
+" let g:terminal_ansi_colors = [
+"   \'#eeeeee', '#af0000', '#008700', '#5f8700',
+"   \'#0087af', '#878787', '#005f87', '#444444',
+"   \'#bcbcbc', '#d70000', '#d70087', '#8700af',
+"   \'#d75f00', '#d75f00', '#005faf', '#005f87' ]
 
