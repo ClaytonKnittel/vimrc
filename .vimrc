@@ -82,7 +82,6 @@ set t_Co=256
 
 let g:mapleader=","
 set ttymouse=xterm2
-set mouse=a
 filetype plugin indent on
 set smartindent
 set tabstop=2
