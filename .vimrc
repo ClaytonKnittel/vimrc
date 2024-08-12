@@ -86,6 +86,7 @@ filetype plugin indent on
 set smartindent
 set tabstop=2
 set shiftwidth=2
+set nu
 set expandtab
 set backspace=indent,eol,start
 set ruler
